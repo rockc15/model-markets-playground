@@ -11,7 +11,7 @@ def get_stock_data(symbol="AAPL"):
 
 
 
-llm = OllamaLLM(model="llama3.2:1b")
+llm = OllamaLLM(model="deepseek-r1:1.5b")
 
 template = "Given the following stock data and news, should I buy, sell, or hold {symbol}? Data: {data}"
 prompt = PromptTemplate(input_variables=["symbol", "data"], template=template)
@@ -22,7 +22,7 @@ chain = LLMChain(llm=llm, prompt=prompt)
 def execute_trade(symbol):
     stock_data = get_stock_data(symbol)
   
-    data_str = str(stock_data.tail(1))  # Latest data   
+    data_str = str(stock_data)  # Latest data   
     print(data_str)
     decision = chain.run(symbol=symbol, data=data_str)
 
