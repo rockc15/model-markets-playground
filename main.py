@@ -20,7 +20,6 @@ prompt = PromptTemplate(input_variables=["symbol", "data"], template=template)
 # Build chain using new RunnableSequence syntax
 chain = prompt | llm
 
-
 def execute_trade(symbol):
     stock_data = get_stock_data(symbol)
     data_str = str(stock_data)  # Use only last 5 rows for brevity
