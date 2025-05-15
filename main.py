@@ -1,29 +1,32 @@
-from alpaca.trading.client import TradingClient
-from alpaca.trading.requests import MarketOrderRequest
-from alpaca.trading.enums import OrderSide, TimeInForce
+import yfinance as yf
+from langchain_ollama.llms import OllamaLLM
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
 
-from dotenv import load_dotenv
-import os
 
-load_dotenv()
+def get_stock_data(symbol="AAPL"):
+    ticker = yf.Ticker(symbol)
+    hist = ticker.history(period="1d", interval="5m")
+    return hist
 
-API_KEY = os.getenv("API_KEY")
-API_SECRET = os.getenv("API_SECRET")
-BASE_URL = os.getenv("https://paper-api.alpaca.markets/v2")
 
-trading_client = TradingClient(API_KEY, API_SECRET, paper=True)
 
-# Define the market order parameters
-market_order_data = MarketOrderRequest(
-    symbol="NVDA",          # Stock symbol
-    qty=1,                 # Number of shares
-    side=OrderSide.BUY,     # Buy or Sell
-    time_in_force=TimeInForce.GTC  # Good Till Cancelled
-)
+llm = OllamaLLM(model="llama3.2:1b")
 
-# Submit the market order
-try:
-    market_order = trading_client.submit_order(order_data=market_order_data)
-    print(f"Market order placed: {market_order.id} for {market_order.qty} shares of {market_order.symbol}")
-except Exception as e:
-    print(f"Error placing order: {e}")
+template = "Given the following stock data and news, should I buy, sell, or hold {symbol}? Data: {data}"
+prompt = PromptTemplate(input_variables=["symbol", "data"], template=template)
+
+chain = LLMChain(llm=llm, prompt=prompt)
+
+
+def execute_trade(symbol):
+    stock_data = get_stock_data(symbol)
+  
+    data_str = str(stock_data.tail(1))  # Latest data   
+    print(data_str)
+    decision = chain.run(symbol=symbol, data=data_str)
+
+    print(decision)
+
+
+execute_trade("NVDA")
