@@ -23,3 +23,5 @@ class YahooFinance:
         plt.legend()
 
         plt.show()
+
+
