@@ -65,7 +65,7 @@ agent = create_tool_calling_agent(llm=llm , tools=tools, prompt=prompt)
 agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
 
 response = agent_executor.invoke({
-    "input": "Use the current stock data to detemine if I should Buy, Hold, or Sell the NVDA stock. Then using the decesion, place a buy, sell, or hold on NVDA",
+    "input": "Use the current stock data to detemine if I should Buy the CRWV stock. Then using the decesion, place a buy on CRWV",
     "chat_history": []
 })
 

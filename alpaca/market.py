@@ -66,4 +66,6 @@ class AlpacaTrading():
 trader = AlpacaTrading()
 trader.listCurrentPositions()
 
+trader.submitMarkerOrder("NVDA")
+# trader.submitSellOrder("NVDA")
 
