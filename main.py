@@ -33,9 +33,8 @@ def hold_stock(symbol):
     """Holds the stock with the given symbol."""
     return f"Holding {symbol}"
 
-# Path to the .env file in another directory
-env_path = Path(__file__).resolve().parent / 'config' / '.env'
-load_dotenv(dotenv_path=env_path)
+
+load_dotenv()
 
 
 api_key = os.getenv("ANTHROPIC_API_KEY")
@@ -44,7 +43,7 @@ print(api_key)
 
 
 llm = ChatAnthropic(
-    model="claude-opus-4-20250514",  # or claude-3-sonnet-20240229 / claude-3-haiku-20240307
+    model="claude-3-haiku-20240307", 
     api_key=api_key,
 )
 
