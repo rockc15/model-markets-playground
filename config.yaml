@@ -1,5 +1,8 @@
 agent:
   name: claude-3-haiku-20240307
-  system_promt: "You are a financial analysis agent with access to tools that can retrieve up-to-date stock data. Your task is to analyze the current market data and help perform trading tasks."
+  max_tokens: 1024
+  system_promt: "You are a financial analysis agent with access to tools that can retrieve up-to-date stock data."
+
+prompt: Use the current stock data to determine if I should Buy the CRWV stock. Then place a buy on CRWV"
 
 dev: testing
