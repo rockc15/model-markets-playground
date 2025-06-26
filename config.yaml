@@ -1,8 +1,24 @@
 agent:
-  name: claude-3-haiku-20240307
-  max_tokens: 1024
-  system_promt: "You are a financial analysis agent with access to tools that can retrieve up-to-date stock data."
+  name: claude-3-5-haiku-latest
+  max_tokens: 2048
+  temperature: 0.1
+  system_promt: "You are a sophisticated financial analysis agent with access to multiple tools for comprehensive market research. You can call multiple tools sequentially to gather all necessary information before making investment recommendations."
 
-prompt: Use the current stock data to determine if I should Buy the CRWV stock. Then place a buy on CRWV"
+# Sequential conversation settings
+conversation:
+  max_iterations: 10
+  require_final_decision: true
+  tool_timeout: 30
 
+# Decision framework settings
+decision_framework:
+  require_reasoning: true
+  min_data_points: 2
+  confidence_threshold: 0.7
+
+# User prompt - this will be the initial query to the agent
+prompt: "Search the web to find the safe companies that are publicly traded, then analysis the stock price, using the information determine weather to buy, hold, or sell the stock"
+
+# Development settings
 dev: testing
+logging_level: INFO
